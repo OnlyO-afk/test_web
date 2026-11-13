@@ -1,16 +1,1905 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
-    <title>Мой первый сайт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наш первый год вместе</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFF9F5',
+                        roseDust: '#E5989B',
+                        roseDark: '#B56576',
+                        peachSoft: '#FFB4A2',
+                        charcoal: '#4A3F3D',
+                        sandCard: '#FFFDFB'
+                    },
+                    fontFamily: {
+                        hand: ['Caveat', 'cursive'],
+                        sans: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; background-color: #f4f4f9; }
-        h1 { color: #333; }
-        p { color: #666; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #FFF9F5;
+            color: #4A3F3D;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .pastel-bg {
+            background-image:
+                radial-gradient(circle at 15% 15%, rgba(255, 180, 162, 0.22) 0%, transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(229, 152, 155, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 25% 75%, rgba(255, 180, 162, 0.18) 0%, transparent 50%),
+                radial-gradient(circle at 80% 85%, rgba(229, 152, 155, 0.22) 0%, transparent 45%);
+        }
+
+        .polaroid-perspective {
+            perspective: 1200px;
+        }
+
+        .polaroid-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+
+        .polaroid-card.clickable .polaroid-inner {
+            cursor: pointer;
+        }
+
+        .polaroid-card.flipped .polaroid-inner {
+            transform: rotateY(180deg);
+        }
+
+        .polaroid-front,
+        .polaroid-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 12px 30px -8px rgba(74, 63, 61, 0.12);
+        }
+
+        .polaroid-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Блокируем клики по скрытой стороне карточки */
+        .polaroid-card.flipped .polaroid-front {
+            pointer-events: none;
+        }
+
+        .polaroid-card:not(.flipped) .polaroid-back {
+            pointer-events: none;
+        }
+
+        @media (min-width: 768px) {
+            .tilt-left {
+                transform: rotate(-2deg);
+            }
+
+            .tilt-right {
+                transform: rotate(2deg);
+            }
+
+            .tilt-slight-left {
+                transform: rotate(-1.2deg);
+            }
+
+            .tilt-slight-right {
+                transform: rotate(1.5deg);
+            }
+
+            .polaroid-card.clickable:hover {
+                transform: rotate(0deg) translateY(-6px);
+                z-index: 10;
+            }
+        }
+
+        .polaroid-card {
+            transition: transform 0.35s ease;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+            }
+
+            50% {
+                opacity: 0.9;
+                transform: translate(-50%, -120%) scale(1.15) rotate(12deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -220%) scale(0.9) rotate(-12deg);
+            }
+        }
+
+        .click-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 1.3rem;
+            color: #B56576;
+            animation: floatHeart 1.2s ease-out forwards;
+            user-select: none;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(-10vh) rotate(0deg) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(105vh) rotate(720deg) scale(0.7);
+            }
+        }
+
+        .celebration-particle {
+            position: fixed;
+            top: 0;
+            pointer-events: none;
+            z-index: 9998;
+            color: #B56576;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes spinRecord {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .vinyl-spin {
+            animation: spinRecord 4s linear infinite;
+        }
+
+        .reason-fade {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .reason-hidden {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .vinyl-record {
+            background: repeating-radial-gradient(#111,
+                    #111 2px,
+                    #1a1a1a 3px,
+                    #1a1a1a 4px);
+        }
+
+        /* Стилизация ползунка прогресса */
+        input[type="range"].audio-progress {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            border-radius: 999px;
+            background: rgba(74, 63, 61, 0.15);
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"].audio-progress::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #B56576;
+            cursor: pointer;
+        }
+
+        input[type="range"].audio-progress.vanya-bar::-webkit-slider-thumb {
+            background: #4A3F3D;
+        }
     </style>
 </head>
-<body>
-    <h1>Глеб лох</h1>
-    <p></p>
+
+<body class="pastel-bg min-h-screen selection:bg-peachSoft/40 selection:text-charcoal">
+
+    <header class="relative min-h-screen flex flex-col items-center justify-center px-4 py-14 text-center">
+        <div
+            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-roseDust/30 shadow-sm mb-6">
+            <span class="text-roseDust text-sm">✦</span>
+            <span class="text-xs sm:text-sm font-medium tracking-wide uppercase text-roseDark">Особенная дата</span>
+            <span class="text-roseDust text-sm">✦</span>
+        </div>
+
+        <h1 class="font-hand text-5xl sm:text-7xl md:text-8xl font-bold text-charcoal mb-4 leading-tight">
+            Наша история
+        </h1>
+
+        <p class="max-w-xl text-sm sm:text-base md:text-lg text-charcoal/80 mb-8 leading-relaxed">
+            Каждая секунда рядом с тобой — это момент, который я хочу сохранить навсегда.
+        </p>
+
+        <div
+            class="w-full max-w-2xl bg-white/85 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-lg border border-peachSoft/40 mb-10">
+            <p class="font-hand text-2xl sm:text-3xl text-roseDark mb-5">
+                Мы вместе уже ровно:
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4" id="timer-grid">
+                <div class="bg-cream rounded-2xl p-4 border border-roseDust/20 shadow-inner">
+                    <div id="days" class="text-3xl sm:text-4xl font-semibold text-charcoal">0</div>
+                    <div id="days-label" class="text-xs uppercase tracking-wider text-roseDark mt-1 font-medium">дней
+                    </div>
+                </div>
+                <div class="bg-cream rounded-2xl p-4 border border-roseDust/20 shadow-inner">
+                    <div id="hours" class="text-3xl sm:text-4xl font-semibold text-charcoal">00</div>
+                    <div id="hours-label" class="text-xs uppercase tracking-wider text-roseDark mt-1 font-medium">часов
+                    </div>
+                </div>
+                <div class="bg-cream rounded-2xl p-4 border border-roseDust/20 shadow-inner">
+                    <div id="minutes" class="text-3xl sm:text-4xl font-semibold text-charcoal">00</div>
+                    <div id="minutes-label" class="text-xs uppercase tracking-wider text-roseDark mt-1 font-medium">
+                        минут</div>
+                </div>
+                <div class="bg-cream rounded-2xl p-4 border border-roseDust/20 shadow-inner">
+                    <div id="seconds" class="text-3xl sm:text-4xl font-semibold text-roseDark">00</div>
+                    <div id="seconds-label" class="text-xs uppercase tracking-wider text-roseDark mt-1 font-medium">
+                        секунд</div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#moments"
+            class="group inline-flex flex-col items-center gap-2 text-roseDark hover:text-charcoal transition-colors">
+            <span class="text-xs uppercase tracking-widest font-medium">Листай ниже</span>
+            <span
+                class="w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center group-hover:translate-y-1 transition-transform">
+                ↓
+            </span>
+        </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 space-y-24 sm:space-y-32 pb-24">
+
+        <!-- СЕКЦИЯ: ФОТОАЛЬБОМ -->
+        <section id="moments" class="scroll-mt-10">
+            <div class="text-center mb-12">
+                <span class="text-xs uppercase tracking-widest text-roseDark font-semibold">Фотоальбом
+                    воспоминаний</span>
+                <h2 class="font-hand text-4xl sm:text-6xl font-bold text-charcoal mt-1">Наши моменты</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+                <!-- КАРТОЧКА 1: ЛУЧШЕЕ ФОТО 1 -->
+                <div class="polaroid-card clickable tilt-left polaroid-perspective h-[410px]"
+                    onclick="this.classList.toggle('flipped')">
+                    <div class="polaroid-inner">
+                        <div
+                            class="polaroid-front bg-white p-4 pb-6 flex flex-col justify-between border border-roseDust/15">
+                            <div class="w-full h-72 rounded-xl overflow-hidden bg-cream relative">
+                                <img src="photo1.jpg" alt="Лучшее фото 1" class="w-full h-full object-cover object-top">
+                            </div>
+                            <div class="pt-3 text-center">
+                                <p class="font-hand text-2xl text-charcoal">Лучшее фото №1</p>
+                            </div>
+                        </div>
+                        <div
+                            class="polaroid-back bg-sandCard p-7 flex flex-col items-center justify-center text-center border-2 border-peachSoft/50">
+                            <h3 class="font-hand text-3xl text-charcoal mb-3">Лучшее фото №1</h3>
+                            <p class="text-base text-charcoal/85">Ну, мне нравится эта фотка</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КАРТОЧКА 2: ЛУЧШЕЕ ФОТО 2 -->
+                <div class="polaroid-card clickable tilt-right polaroid-perspective h-[410px]"
+                    onclick="this.classList.toggle('flipped')">
+                    <div class="polaroid-inner">
+                        <div
+                            class="polaroid-front bg-white p-4 pb-6 flex flex-col justify-between border border-roseDust/15">
+                            <div class="w-full h-72 rounded-xl overflow-hidden bg-cream relative">
+                                <img src="photo2.jpg" alt="Лучшее фото 2"
+                                    class="w-full h-full object-cover object-center">
+                            </div>
+                            <div class="pt-3 text-center">
+                                <p class="font-hand text-2xl text-charcoal">Лучшее фото №2</p>
+                            </div>
+                        </div>
+                        <div
+                            class="polaroid-back bg-sandCard p-7 flex flex-col items-center justify-center text-center border-2 border-roseDust/50">
+                            <h3 class="font-hand text-3xl text-charcoal mb-3">Лучшее фото №2</h3>
+                            <p class="text-base text-charcoal/85">Ну, мне нравится эта фотка</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КАРТОЧКА 3: ПЕРВАЯ ФОТКА -->
+                <div class="polaroid-card clickable tilt-slight-left polaroid-perspective h-[410px]"
+                    onclick="this.classList.toggle('flipped')">
+                    <div class="polaroid-inner">
+                        <div
+                            class="polaroid-front bg-white p-4 pb-6 flex flex-col justify-between border border-roseDust/15">
+                            <div class="w-full h-72 rounded-xl overflow-hidden bg-cream relative">
+                                <img src="photo3.jpg" alt="Первая фотка" class="w-full h-full object-cover">
+                            </div>
+                            <div class="pt-3 text-center">
+                                <p class="font-hand text-2xl text-charcoal">Первая фотка</p>
+                            </div>
+                        </div>
+                        <div
+                            class="polaroid-back bg-sandCard p-7 flex flex-col items-center justify-center text-center border-2 border-peachSoft/50">
+                            <h3 class="font-hand text-3xl text-charcoal mb-3">Первая фотка</h3>
+                            <p class="text-base text-charcoal/85">Самый первый кадр, с которого началась наша история.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КАРТОЧКА 4: ВАЙБОВЫЕ ФОТКИ (1) -->
+                <div class="polaroid-card clickable tilt-slight-right polaroid-perspective h-[410px]"
+                    onclick="this.classList.toggle('flipped')">
+                    <div class="polaroid-inner">
+                        <div
+                            class="polaroid-front bg-white p-4 pb-6 flex flex-col justify-between border border-roseDust/15">
+                            <div class="w-full h-72 rounded-xl overflow-hidden bg-cream relative">
+                                <img src="photo4.jpg" alt="Вайбовые фотки" class="w-full h-full object-cover">
+                            </div>
+                            <div class="pt-3 text-center">
+                                <p class="font-hand text-2xl text-charcoal">Вайбовые фотки</p>
+                            </div>
+                        </div>
+                        <div
+                            class="polaroid-back bg-sandCard p-7 flex flex-col items-center justify-center text-center border-2 border-roseDust/50">
+                            <h3 class="font-hand text-3xl text-charcoal mb-3">Вайбовые фотки</h3>
+                            <p class="text-base text-charcoal/85">Тот самый момент, когда атмосфера говорит сама за
+                                себя.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КАРТОЧКА 5: ВАЙБОВЫЕ ФОТКИ (2) -->
+                <div class="polaroid-card clickable tilt-left polaroid-perspective h-[410px]"
+                    onclick="this.classList.toggle('flipped')">
+                    <div class="polaroid-inner">
+                        <div
+                            class="polaroid-front bg-white p-4 pb-6 flex flex-col justify-between border border-roseDust/15">
+                            <div class="w-full h-72 rounded-xl overflow-hidden bg-cream relative">
+                                <img src="photo5.jpg" alt="Вайбовые фотки" class="w-full h-full object-cover">
+                            </div>
+                            <div class="pt-3 text-center">
+                                <p class="font-hand text-2xl text-charcoal">Вайбовые фотки</p>
+                            </div>
+                        </div>
+                        <div
+                            class="polaroid-back bg-sandCard p-7 flex flex-col items-center justify-center text-center border-2 border-peachSoft/50">
+                            <h3 class="font-hand text-3xl text-charcoal mb-3">Вайбовые фотки</h3>
+                            <p class="text-base text-charcoal/85">Ещё один любимый кадр из нашей коллекции.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КАРТОЧКА 6: ЗАБАВНАЯ МОСЬКА -->
+                <div class="polaroid-card clickable tilt-right polaroid-perspective h-[410px]"
+                    onclick="this.classList.toggle('flipped')">
+                    <div class="polaroid-inner">
+                        <div
+                            class="polaroid-front bg-white p-4 pb-6 flex flex-col justify-between border border-roseDust/15">
+                            <div class="w-full h-72 rounded-xl overflow-hidden bg-cream relative">
+                                <img src="photo6.jpg" alt="Забавная моська" class="w-full h-full object-cover">
+                            </div>
+                            <div class="pt-3 text-center">
+                                <p class="font-hand text-2xl text-charcoal">Забавная моська</p>
+                            </div>
+                        </div>
+                        <div
+                            class="polaroid-back bg-sandCard p-7 flex flex-col items-center justify-center text-center border-2 border-roseDust/50">
+                            <h3 class="font-hand text-3xl text-charcoal mb-3">Забавная моська</h3>
+                            <p class="text-base text-charcoal/85">Даже с таким выражением лица ты самая лучшая.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: МУЗЫКАЛЬНАЯ КАРТОЧКА (ДВУХСТОРОННЯЯ) -->
+        <section class="max-w-md mx-auto">
+            <div class="text-center mb-6">
+                <h2 class="font-hand text-4xl sm:text-5xl font-bold text-charcoal">Наш саундтрек</h2>
+                <p class="text-sm text-charcoal/70 mt-2">Музыка, которая ассоциируется у нас друг с другом</p>
+            </div>
+
+            <div class="polaroid-card polaroid-perspective h-[600px] relative" id="music-card">
+                <!-- ОДНА И ТА ЖЕ КНОПКА ПЕРЕВОРОТА В ПРАВОМ ВЕРХНЕМ УГЛУ -->
+                <button type="button" onclick="flipMusicCard(event)"
+                    class="absolute top-5 right-5 z-30 text-xs font-semibold bg-roseDust/15 text-roseDark px-3.5 py-2 rounded-full hover:bg-roseDust/25 active:scale-95 transition-all shadow-sm cursor-pointer">
+                    Перевернуть ↻
+                </button>
+
+                <div class="polaroid-inner">
+                    <!-- СТОРОНА 1: СОНЯ -->
+                    <div
+                        class="polaroid-front bg-white p-6 flex flex-col justify-between border border-roseDust/30 shadow-xl rounded-2xl">
+                        <div class="flex items-center pr-32">
+                            <span class="font-hand text-3xl text-roseDark font-bold">Сторона Сони</span>
+                        </div>
+
+                        <div class="flex flex-col items-center my-auto">
+                            <!-- Пластинка Сони -->
+                            <div id="vinyl-sonya"
+                                class="w-36 h-36 rounded-full vinyl-record border-4 border-gray-900 shadow-[0_0_15px_rgba(0,0,0,0.25)] flex items-center justify-center relative">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-roseDust flex items-center justify-center border border-gray-800">
+                                    <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                </div>
+                                <div class="absolute inset-0 rounded-full border-t border-white/20"></div>
+                                <div class="absolute inset-2 rounded-full border-r border-white/10"></div>
+                            </div>
+
+                            <div class="mt-4 text-center">
+                                <p id="artist-sonya" class="font-bold text-charcoal text-lg tracking-wide">UBEL</p>
+                                <p id="title-sonya" class="text-sm text-charcoal/80 mt-0.5">Я буду ждать</p>
+                                <p id="status-sonya" class="text-xs text-roseDark mt-1 h-4"></p>
+                            </div>
+
+                            <!-- Шкала прогресса Сони -->
+                            <div class="w-full mt-2 px-1">
+                                <input id="progress-sonya" type="range" min="0" max="100" value="0"
+                                    class="w-full audio-progress" oninput="seekAudio('sonya', this.value)">
+                                <div class="flex justify-between text-[11px] text-charcoal/60 mt-1">
+                                    <span id="time-cur-sonya">0:00</span>
+                                    <span id="time-dur-sonya">0:00</span>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="toggleAudio('sonya')"
+                                class="mt-2 w-12 h-12 bg-gradient-to-r from-roseDust to-roseDark text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                                <svg id="icon-sonya" class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Выбор из 3 треков Сони -->
+                        <div class="space-y-1.5 mt-3" id="tracklist-sonya"></div>
+                        <audio id="audio-sonya" preload="metadata"></audio>
+                    </div>
+
+                    <!-- СТОРОНА 2: ВАНЯ -->
+                    <div
+                        class="polaroid-back bg-sandCard p-6 flex flex-col justify-between border-2 border-charcoal/10 shadow-xl rounded-2xl">
+                        <div class="flex items-center pr-32">
+                            <span class="font-hand text-3xl text-charcoal font-bold">Сторона Вани</span>
+                        </div>
+
+                        <div class="flex flex-col items-center my-auto">
+                            <!-- Пластинка Вани -->
+                            <div id="vinyl-vanya"
+                                class="w-36 h-36 rounded-full vinyl-record border-4 border-gray-900 shadow-[0_0_15px_rgba(0,0,0,0.25)] flex items-center justify-center relative">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-blue-900 flex items-center justify-center border border-gray-800">
+                                    <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+                                </div>
+                                <div class="absolute inset-0 rounded-full border-t border-white/20"></div>
+                                <div class="absolute inset-2 rounded-full border-r border-white/10"></div>
+                            </div>
+
+                            <div class="mt-4 text-center">
+                                <p id="artist-vanya" class="font-bold text-charcoal text-lg tracking-wide">Баста, Моя
+                                    Мишель</p>
+                                <p id="title-vanya" class="text-sm text-charcoal/80 mt-0.5">Если я буду танцевать</p>
+                                <p id="status-vanya" class="text-xs text-roseDark mt-1 h-4"></p>
+                            </div>
+
+                            <!-- Шкала прогресса Вани -->
+                            <div class="w-full mt-2 px-1">
+                                <input id="progress-vanya" type="range" min="0" max="100" value="0"
+                                    class="w-full audio-progress vanya-bar" oninput="seekAudio('vanya', this.value)">
+                                <div class="flex justify-between text-[11px] text-charcoal/60 mt-1">
+                                    <span id="time-cur-vanya">0:00</span>
+                                    <span id="time-dur-vanya">0:00</span>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="toggleAudio('vanya')"
+                                class="mt-2 w-12 h-12 bg-gradient-to-br from-gray-800 to-charcoal text-white rounded-full flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                                <svg id="icon-vanya" class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Выбор из 3 треков Вани -->
+                        <div class="space-y-1.5 mt-3" id="tracklist-vanya"></div>
+                        <audio id="audio-vanya" preload="metadata"></audio>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: 1000 ПРИЧИН -->
+        <section class="max-w-2xl mx-auto">
+            <div
+                class="bg-white/90 backdrop-blur-md rounded-3xl p-7 sm:p-12 shadow-xl border border-roseDust/30 text-center relative overflow-hidden">
+                <div class="absolute -top-6 -right-6 text-8xl text-peachSoft/20 select-none pointer-events-none">♥</div>
+                <div class="absolute -bottom-6 -left-6 text-8xl text-roseDust/20 select-none pointer-events-none">♥
+                </div>
+
+                <span
+                    class="inline-block px-3 py-1 rounded-full bg-peachSoft/25 text-roseDark text-xs font-semibold uppercase tracking-wider mb-3">
+                    Интерактивная баночка комплиментов
+                </span>
+
+                <h2 class="font-hand text-4xl sm:text-5xl font-bold text-charcoal mb-6">
+                    1000 причин, почему я тебя люблю
+                </h2>
+
+                <div
+                    class="min-h-[140px] sm:min-h-[120px] flex flex-col items-center justify-center bg-cream rounded-2xl p-6 mb-7 border border-peachSoft/40">
+                    <span id="reason-number" class="text-xs font-semibold text-roseDark uppercase tracking-widest mb-2">
+                        Нажми кнопку ниже
+                    </span>
+                    <p id="reason-text"
+                        class="reason-fade text-base sm:text-lg font-medium text-charcoal leading-relaxed">
+                        Тут появится случайная причина из нашей копилки!
+                    </p>
+                </div>
+
+                <button onclick="showNextReason()"
+                    class="px-7 py-4 rounded-2xl bg-gradient-to-r from-roseDust to-roseDark text-white font-medium text-sm sm:text-base shadow-lg shadow-roseDust/30 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
+                    Узнать причину
+                </button>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ: ФИНАЛ -->
+        <section class="max-w-xl mx-auto text-center">
+            <div id="finale-card"
+                class="bg-white/90 backdrop-blur-md rounded-3xl p-8 sm:p-10 shadow-xl border border-roseDust/30">
+                <h2 class="font-hand text-4xl sm:text-5xl font-bold text-charcoal mb-3">
+                    Продлеваем подписку на отношения?
+                </h2>
+                <p id="finale-subtitle" class="text-sm text-charcoal/70 mb-8">
+                    В тариф включены: бесконечные обнимашки, вкусняшки и моя безграничная любовь.
+                </p>
+
+                <div id="buttons-area" class="relative flex flex-wrap items-center justify-center gap-4 min-h-[90px]">
+                    <button onclick="acceptSubscription()"
+                        class="px-8 py-4 rounded-2xl bg-gradient-to-r from-roseDust to-roseDark text-white font-semibold text-base sm:text-lg shadow-lg shadow-roseDust/35 hover:scale-105 active:scale-95 transition-transform cursor-pointer z-10">
+                        Да!
+                    </button>
+                    <button id="no-btn"
+                        class="px-7 py-4 rounded-2xl bg-cream text-charcoal/70 border border-charcoal/15 font-medium text-base transition-all duration-200 cursor-pointer select-none">
+                        Нет
+                    </button>
+                </div>
+
+                <div id="success-message"
+                    class="hidden mt-4 p-6 rounded-2xl bg-cream border border-peachSoft/50 animate-fade-in">
+                    <p class="font-hand text-3xl sm:text-4xl text-roseDark mb-2">Ура! Подписка успешно продлена!</p>
+                    <p class="text-sm text-charcoal/80">Обещаю, дальше будет только лучше!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center pb-10 text-xs text-charcoal/50">
+        Сделано с огромной любовью специально для тебя
+    </footer>
+
+    <!-- JAVASCRIPT ЛОГИКА -->
+    <script>
+        // СПИСОК ПРИЧИН
+        const loveReasons = [
+            "За то, что ты улыбаешься так, что весь мир становится светлее",
+            "За твои глаза, в которых я вижу своё будущее",
+            "За то, что ты смеёшься над моими глупыми шутками",
+            "Потому что ты делаешь каждое утро особенным",
+            "За твой голос, который звучит как самая красивая мелодия",
+            "За то, что ты обнимаешь меня так крепко, будто боишься потерять",
+            "За твою доброту, которая не знает границ",
+            "За то, что ты веришь в меня, даже когда я сам не верю",
+            "Потому что ты умеешь превращать обычный день в праздник",
+            "За то, что рядом с тобой я становлюсь лучше",
+            "За твой смех, который заполняет комнату счастьем",
+            "За то, что ты готовишь самый вкусный борщ на свете",
+            "Потому что ты понимаешь меня без слов",
+            "За твои мягкие руки, которые всегда находят мои",
+            "За то, что ты танцуешь на кухне, когда думаешь, что никто не видит",
+            "За твою силу духа, которая вдохновляет меня каждый день",
+            "За то, что ты пахнешь как дом, в который хочется возвращаться",
+            "Потому что ты единственная, кто знает, как меня успокоить",
+            "За твои маленькие записочки, которые ты оставляешь мне",
+            "За то, что ты не стесняешься быть собой рядом со мной",
+            "За твою нежность, от которой тает сердце",
+            "За то, что ты поддерживаешь все мои безумные идеи",
+            "Потому что ты делаешь лучший кофе по утрам",
+            "За твои веснушки, которые появляются летом",
+            "За то, что ты споришь со мной, потому что тебе не всё равно",
+            "За твою мудрость, которая удивляет меня снова и снова",
+            "За то, что ты засыпаешь у меня на плече",
+            "Потому что ты помнишь все важные даты",
+            "За твой характер — сильный и нежный одновременно",
+            "За то, что ты заботишься обо мне, когда я болею",
+            "За твою улыбку, которая появляется, когда ты видишь щенков",
+            "За то, что ты читаешь мне вслух свои любимые книги",
+            "Потому что ты умеешь находить красоту в простых вещах",
+            "За твои объятия, которые лечат любую боль",
+            "За то, что ты всегда честна со мной",
+            "За твою способность прощать мои ошибки",
+            "За то, что ты поёшь в душе и думаешь, что я не слышу",
+            "Потому что ты — мой лучший друг и моя любовь",
+            "За твои тёплые ладони в холодный зимний день",
+            "За то, что ты смотришь на звёзды вместе со мной",
+            "За твою искренность в каждом слове",
+            "За то, что ты научила меня любить по-настоящему",
+            "Потому что ты всегда знаешь, что сказать",
+            "За твои кулинарные эксперименты, даже неудачные",
+            "За то, что ты обнимаешь меня сзади, когда я готовлю",
+            "За твою красоту, которая не нуждается в макияже",
+            "За то, что ты плачешь от счастья на красивых фильмах",
+            "Потому что ты делаешь мою жизнь полной смысла",
+            "За твой заразительный оптимизм",
+            "За то, что ты всегда берёшь мою руку первой",
+            "За твою верность, которая сильнее любых испытаний",
+            "За то, что ты носишь мои футболки и выглядишь в них лучше меня",
+            "Потому что ты умеешь слушать, когда мне нужно выговориться",
+            "За твой запах после дождя — свежий и родной",
+            "За то, что ты учишь меня терпению своим примером",
+            "За твои сонные глаза по утрам — самое милое зрелище",
+            "За то, что ты всегда оставляешь мне последний кусочек торта",
+            "Потому что ты — причина, по которой я просыпаюсь с улыбкой",
+            "За твою заботу о каждом живом существе",
+            "За то, что ты придумываешь мне смешные прозвища",
+            "За твою храбрость в трудные моменты",
+            "За то, что ты не боишься показывать свои чувства",
+            "Потому что ты делаешь нашу маленькую квартиру уютным домом",
+            "За твои танцы под дождём",
+            "За то, что ты помнишь историю нашего первого поцелуя",
+            "За твою способность радоваться мелочам",
+            "За то, что ты смеёшься так громко и заразительно",
+            "Потому что ты всегда на моей стороне",
+            "За твои бесконечные фотографии заката",
+            "За то, что ты укрываешь меня одеялом, когда я засыпаю на диване",
+            "За твою невероятную интуицию",
+            "За то, что ты любишь моих родителей как своих",
+            "Потому что ты умеешь делать сюрпризы",
+            "За твои длинные волосы, которые всегда пахнут цветами",
+            "За то, что ты целуешь меня в лоб перед сном",
+            "За твою щедрость души",
+            "За то, что ты помогаешь мне стать лучшей версией себя",
+            "Потому что ты — мой якорь в шторме",
+            "За твои детские восторги от первого снега",
+            "За то, что ты всегда находишь нужные слова",
+            "За твою трудолюбивость и целеустремлённость",
+            "За то, что ты не осуждаешь меня за мои слабости",
+            "Потому что ты умеешь хранить секреты",
+            "За твои нежные поцелуи в шею",
+            "За то, что ты всегда готова к новым приключениям",
+            "За твой взгляд, полный любви",
+            "За то, что ты делаешь мир вокруг себя добрее",
+            "Потому что ты — единственная, с кем я хочу стареть",
+            "За твою способность видеть хорошее в каждом человеке",
+            "За то, что ты согреваешь мои руки своими",
+            "За твои милые привычки, которые я обожаю",
+            "За то, что ты каждый день выбираешь быть со мной",
+            "Потому что ты научила меня ценить каждый момент",
+            "За твою грацию в каждом движении",
+            "За то, что ты разговариваешь с растениями и веришь, что они слышат",
+            "За твою энергия, которая заряжает всех вокруг",
+            "За то, что ты обнимаешь подушку, когда меня нет рядом",
+            "Потому что ты всегда пахнешь вкусно",
+            "За твоё терпение, когда я опаздываю",
+            "За то, что ты — моя самая красивая мечта, ставшая реальностью",
+            "За твои маленькие капризы, которые делают тебя ещё милее",
+            "За то, что ты знаешь наизусть все мои любимые песни",
+            "Потому что ты — самое лучшее, что случилось в моей жизни",
+            "За твою ямочку на щеке, когда ты улыбаешься",
+            "За то, что ты заставляешь меня смеяться до слёз",
+            "За твоё умение создавать уют из ничего",
+            "За то, что ты дуешь на горячий чай перед тем, как дать мне",
+            "Потому что ты понимаешь мой юмор лучше всех",
+            "За твои тёплые носки, которые ты надеваешь зимой",
+            "За то, что ты написала мне первой в тот вечер",
+            "За твою решительность в важных вопросах",
+            "За то, что ты стала моей семьёй",
+            "Потому что ты всегда делишься со мной своим мороженым",
+            "За твои забавные выражения лица",
+            "За то, что ты болеешь за меня как самый преданный фанат",
+            "За твою непосредственность, которая покоряет",
+            "За то, что ты помнишь мой любимый цвет и вкус мороженого",
+            "Потому что ты — тот человек, о котором я мечтал",
+            "За твою нежную кожу, к которой хочется прикасаться",
+            "За то, что ты делаешь забавные селфи и отправляешь мне",
+            "За твою страсть к жизни",
+            "За то, что ты научила меня готовить хотя бы яичницу",
+            "Потому что ты — моё утреннее солнце",
+            "За твои длинные разговоры по ночам",
+            "За то, что ты всегда говоришь правду, даже если это трудно",
+            "За твою невинную улыбку",
+            "За то, что ты собираешь мне обед на работу",
+            "Потому что ты умеешь молчать рядом, и это не неловко",
+            "За твои рисунки сердечек на запотевшем стекле",
+            "За то, что ты хочешь путешествовать со мной по всему миру",
+            "За твою женственность",
+            "За то, что ты смотришь со мной футбол, даже если тебе скучно",
+            "Потому что ты делаешь каждый вечер особенным",
+            "За твои тёплые слова, которые греют душу",
+            "За то, что ты прижимаешься ко мне, когда тебе холодно",
+            "За твою заботу о нашем будущем",
+            "За то, что ты красива даже в домашней одежде",
+            "Потому что ты — мой дом, куда бы мы ни поехали",
+            "За твой аромат ванили, который остаётся на моей одежде",
+            "За то, что ты сочиняешь глупые стишки и посвящаешь их мне",
+            "За твою смелость мечтать вместе со мной",
+            "За то, что ты гладишь мои волосы, когда мне грустно",
+            "Потому что ты — единственная, кто может меня рассмешить, когда мне плохо",
+            "За твои тёплые пироги по воскресеньям",
+            "За то, что ты каждый раз радуешься цветам, как в первый",
+            "За твою детскую радость от мыльных пузырей",
+            "За то, что ты всегда ждёшь меня с работы",
+            "Потому что ты делаешь обычные вещи необыкновенными",
+            "За твою ласку, от которой замирает сердце",
+            "За то, что ты помнишь всех героев моих историй",
+            "За твою привычку засыпать с книжкой в руках",
+            "За то, что ты бережёшь нашу любовь каждый день",
+            "Потому что ты умеешь прощать",
+            "За твою красивую походку",
+            "За то, что ты кладёшь записки мне в карман",
+            "За твои глаза, которые светятся, когда ты счастлива",
+            "За то, что ты крадёшь кусочки с моей тарелки",
+            "Потому что ты — моя самая любимая привычка",
+            "За твою способность превращать ссору в объятия",
+            "За то, что ты заставляешь моё сердце биться быстрее",
+            "За твои милые сообщения посреди дня",
+            "За то, что ты танцуешь со мной в гостиной без музыки",
+            "Потому что ты делаешь мою жизнь яркой",
+            "За твой талант создавать праздничную атмосферу",
+            "За то, что ты щекочешь меня, когда я слишком серьёзный",
+            "За твою элегантность",
+            "За то, что ты покупаешь мне сладости, когда я не прошу",
+            "Потому что ты — моё самое большое счастье",
+            "За твою привычку целовать мою руку",
+            "За то, что ты вдохновляешь меня на подвиги",
+            "За твой звонкий смех по телефону",
+            "За то, что ты не стесняешься своих эмоций",
+            "Потому что ты — моя опора и мой свет",
+            "За твою способность находить выход из любой ситуации",
+            "За то, что ты любишь гулять под дождём",
+            "За твою привычку обнимать меня неожиданно",
+            "За то, что ты делишься со мной своими мечтами",
+            "Потому что ты всегда рядом, когда мне нужно",
+            "За твои нежные прикосновения к моему лицу",
+            "За то, что ты строишь планы на наше будущее",
+            "За твоё чувство стиля",
+            "За то, что ты варишь какао с маршмеллоу в дождливые вечера",
+            "Потому что ты — мой лучший собеседник",
+            "За твою привычку фотографировать всё красивое",
+            "За то, что ты поддерживаешь мои хобби",
+            "За твою искренность в каждом поступке",
+            "За то, что ты кутаешься в плед и выглядишь как маленький буррито",
+            "Потому что ты научила меня ценить тишину вдвоём",
+            "За твой талант рассказывать истории",
+            "За то, что ты пишешь мне 'доброе утро' каждый день",
+            "За твою способность создавать счастье из воздуха",
+            "За то, что ты — мой личный луч солнца",
+            "Потому что ты делаешь каждый поцелуй незабываемым",
+            "За твою привычку напевать мелодии себе под нос",
+            "За то, что ты смеёшься даже над моими самыми плоскими шутками",
+            "За твою страсть к путешествиям",
+            "За то, что ты знаешь, как я люблю свой чай",
+            "Потому что ты — моя муза и вдохновение",
+            "За твои тёплые объятия после долгого дня",
+            "За то, что ты присылаешь мне мемы, которые точно опишут нас",
+            "За твою привычку загадывать желания на падающие звёзды",
+            "За то, что ты делаешь мир лучше просто своим существованием",
+            "За твою привычку кусать губу, когда ты задумалась",
+            "Потому что ты — мой любимый человек на планете",
+            "За то, что ты знаешь все мои недостатки и любишь всё равно",
+            "За твою способность чувствовать моё настроение",
+            "За то, что ты носишь мою толстовку и не хочешь отдавать",
+            "Потому что ты всегда найдёшь повод для праздника",
+            "За твои горячие блинчики с вареньем",
+            "За то, что ты разговариваешь во сне и это очень мило",
+            "За твою любовь к животным",
+            "За то, что ты заплетаешь мне волосы, когда мы лежим на диване",
+            "Потому что ты умеешь быть серьёзной и игривой одновременно",
+            "За твои маленькие подарки без повода",
+            "За то, что ты запоминаешь каждую мелочь, которую я упоминаю",
+            "За твою привычку держать мою руку в кармане моей куртки",
+            "За то, что ты — идеальная большая ложка",
+            "Потому что ты вкусно целуешься",
+            "За твою улыбку, когда ты получаешь от меня цветы",
+            "За то, что ты придумываешь названия для наших будущих детей",
+            "За твою привычку оставлять везде заколки",
+            "За то, что ты делаешь каждое Рождество волшебным",
+            "Потому что ты — моя самая главная победа",
+            "За твой аппетит, когда ты не притворяешься",
+            "За то, что ты смотришь на меня так, будто я — лучшее, что есть",
+            "За твою привычку прижиматься к моей спине ночью",
+            "За то, что ты никогда не сдаёшься",
+            "Потому что ты умеешь радоваться за других",
+            "За твои кудряшки после душа",
+            "За то, что ты готова ехать куда угодно, лишь бы вместе",
+            "За твою привычку закрывать мне глаза ладонями и спрашивать 'кто?'",
+            "За то, что ты помнишь годовщины, о которых я забываю",
+            "Потому что ты — мой любимый будильник",
+            "За твою способность делать из любого дома уютное гнёздышко",
+            "За то, что ты переживаешь за меня, как мама",
+            "За твою привычку показывать мне красивые облака",
+            "За то, что ты — самый важный человек в моей жизни",
+            "Потому что ты научила меня говорить 'я тебя люблю' вслух",
+            "За твои мягкие губы",
+            "За то, что ты зажигаешь свечи для романтического ужина",
+            "За твою привычку хвалить мою готовку, даже если она не идеальна",
+            "За то, что ты умеешь делать массаж",
+            "Потому что ты — моя вечная весна",
+            "За твои стеснительные взгляды",
+            "За то, что ты бежишь мне навстречу, когда я прихожу",
+            "За твою привычку собирать ракушки на пляже",
+            "За то, что ты смеёшься, когда я пою фальшиво",
+            "Потому что ты делаешь даже скучные дела весёлыми",
+            "За твою невероятную память на детали",
+            "За то, что ты делаешь мне комплименты, когда я этого не жду",
+            "За твою привычку целовать мою ладонь",
+            "За то, что ты — моя тихая гавань",
+            "Потому что ты всегда пахнешь как счастье",
+            "За твои длинные ресницы, которыми ты хлопаешь, когда что-то хочешь",
+            "За то, что ты устраиваешь пикники на балконе",
+            "За твою привычку носить мои шапки",
+            "За то, что ты знаешь мой заказ в любом кафе",
+            "Потому что ты — лучшее доказательство того, что чудеса существуют",
+            "За твои солнечные улыбки в пасмурный день",
+            "За то, что ты выбираешь фильмы для нашего вечера",
+            "За твою привычку обнимать меня за шею",
+            "За то, что ты делаешь бутерброды-сердечки",
+            "Потому что ты — моя самая сладкая зависимость",
+            "За твои глаза после слёз — ещё более красивые",
+            "За то, что ты строишь одеяльные форты со мной",
+            "За твою способность быть одновременно хрупкой и сильной",
+            "За то, что ты учишь меня танцевать",
+            "Потому что ты — мой компас, когда я теряюсь",
+            "За твои рукописные письма",
+            "За то, что ты вытираешь мои слёзы",
+            "За твою привычку кормить бездомных кошек",
+            "За то, что ты поёшь колыбельные нашему коту",
+            "Потому что ты — самый красивый человек, которого я знаю",
+            "За твои мудрые советы",
+            "За то, что ты терпишь мой храп",
+            "За твою привычку рисовать на моей руке",
+            "За то, что ты создаёшь плейлисты с нашими песнями",
+            "Потому что ты — моя история любви в реальной жизни",
+            "За твою привычку шептать мне на ухо",
+            "За то, что ты помнишь день, когда мы познакомились",
+            "За твои губы со вкусом клубники",
+            "За то, что ты гордишься мной перед друзьями",
+            "Потому что ты — мой рассвет и закат",
+            "За твою привычку трогать мой нос",
+            "За то, что ты умеешь выбирать идеальные подарки",
+            "За твои объятия, от которых не хочется уходить",
+            "За то, что ты заставляешь меня верить в сказки",
+            "Потому что ты — та, ради которой я готов на всё",
+            "За твою привычку считать звёзды вместе",
+            "За то, что ты приносишь мне чай, когда я работаю допоздна",
+            "За твою нежность, с которой ты произносишь моё имя",
+            "За то, что ты кусаешь мочку моего уха",
+            "Потому что ты умеешь делать обычный вторник лучшим днём недели",
+            "За твою привычку засыпать под звук моего голоса",
+            "За то, что ты красишь ногти в мой любимый цвет",
+            "За твои сумасшедшие идеи для свиданий",
+            "За то, что ты — мой самый желанный собеседник в три часа ночи",
+            "Потому что ты заботишься о моём здоровье больше, чем я сам",
+            "За твою привычку целовать мои пальцы по одному",
+            "За то, что ты знаешь, когда мне нужно побыть одному",
+            "За твои кулинарные шедевры из остатков в холодильнике",
+            "Потому что ты — та единственная, кому я доверяю полностью",
+            "За твою привычку оборачиваться и махать мне, уходя",
+            "За то, что ты учишься новому ради нас",
+            "За твои поцелуи в нос",
+            "За то, что ты смеёшься над собой без стеснения",
+            "Потому что ты — моя награда за все трудности",
+            "За твою способность видеть лучшее во мне",
+            "За то, что ты играешь с моими пальцами, когда нервничаешь",
+            "За твои волосы, разметавшиеся по подушке",
+            "За то, что ты пишешь мне длинные сообщения обо всём",
+            "Потому что ты делаешь каждую поезку в машине приключением",
+            "За твою привычку петь хором со мной в караоке",
+            "За то, что ты не разрешаешь мне грустить в одиночестве",
+            "За твои тёплые свитера, которые пахнут тобой",
+            "За то, что ты каждый раз целуешь меня, как в первый",
+            "Потому что ты — моё определение слова 'счастье'",
+            "За твои дурацкие танцы, от которых невозможно не улыбнуться",
+            "За то, что ты носишь с собой наше общее фото",
+            "За твою способность организовать что угодно",
+            "За то, что ты оставляешь мне тёплое место в кровати",
+            "Потому что ты — причина, по которой я верю в любовь",
+            "За твои маленькие сюрпризы в моей сумке",
+            "За то, что ты гладишь мою щёку перед сном",
+            "За твою привычку говорить 'будь осторожен' каждый раз",
+            "За то, что ты просишь меня открыть банку, чтобы я почувствовал себя сильным",
+            "Потому что ты умеешь заставить меня покраснеть",
+            "За твои глупые вопросы, которые на самом деле очень милые",
+            "За то, что ты лепишь пельмени вместе со мной",
+            "За твою привычку прятать лицо в моей груди",
+            "За то, что ты — моя любимая часть каждого дня",
+            "Потому что ты делаешь каждый Новый год незабываемым",
+            "За твои ямочки на коленках",
+            "За то, что ты смотришь мне в глаза, когда говоришь важное",
+            "За твою привычку собирать полевые цветы",
+            "За то, что ты планируешь наши отпуска с такой любовью",
+            "Потому что ты — мой персональный антидепрессант",
+            "За твои сонные бормотания",
+            "За то, что ты обнимаешь мою подушку, когда я уезжаю",
+            "За твою способность утешить одним словом",
+            "За то, что ты чистишь мне мандарины",
+            "Потому что ты — моя идеальная половинка",
+            "За твою привычку оставлять поцелуй на зеркале",
+            "За то, что ты веришь в нашу любовь безоговорочно",
+            "За твои маленькие победы, которыми ты делишься со мной",
+            "За то, что ты — самая нежная на свете",
+            "Потому что ты делаешь мои дни рождения особенными",
+            "За твою привычку целовать мою родинку",
+            "За то, что ты встречаешь меня в аэропорту с плакатом",
+            "За твои заботливые руки",
+            "За то, что ты хранишь наши общие вещи как сокровища",
+            "Потому что ты — та, кого я искал всю жизнь",
+            "За твою привычку класть голову мне на колени",
+            "За то, что ты придумываешь традиции для нас двоих",
+            "За твои глаза цвета мёда",
+            "За то, что ты гуляешь со мной допоздна и не жалуешься",
+            "Потому что ты — моя самая красивая реальность",
+            "За твою привычку кормить меня с ложки",
+            "За то, что ты каждый раз обнимаешь меня при встрече",
+            "За твои романтические идеи",
+            "За то, что ты засыпаешь на моём плече в кино",
+            "Потому что ты делаешь каждую осень золотой",
+            "За твою привычку дуть на мою ранку",
+            "За то, что ты составляешь списки наших общих мечт",
+            "За твоё уютное тепло рядом со мной",
+            "За то, что ты — лучший партнёр для настольных игр",
+            "Потому что ты — моя вселенная в одном человеке",
+            "За твои письма на стикерах, приклеенных к холодильнику",
+            "За то, что ты качаешь головой от умиления, глядя на меня",
+            "За твою привычку греть ноги об мои",
+            "За то, что ты делаешь мне завтрак-сюрприз в постель",
+            "Потому что ты — моя главная причина быть счастливым",
+            "За твои поцелуи, которые снимают все тревоги",
+            "За то, что ты шепчешь 'я люблю тебя' мне в ключицу",
+            "За твою привычку водить пальцем по моей ладони",
+            "За то, что ты — самое тёплое существо на планете",
+            "Потому что ты умеешь ценить простые радости",
+            "За твои объятия, которые длятся целую вечность",
+            "За то, что ты выбрала именно меня",
+            "За твою привычку играть с моими ушами",
+            "За то, что ты радуешься каждой нашей маленькой победе",
+            "Потому что ты — самая добрая душа, которую я встречал",
+            "За твои нежные слова перед расставанием",
+            "За то, что ты украшаешь ёлку со мной каждый год",
+            "За твою привычку присылать мне фото вкусной еды",
+            "За то, что ты — мой самый надёжный человек",
+            "Потому что ты научила меня не бояться чувств",
+            "За твои аппетитные щёчки",
+            "За то, что ты прячешь подарки так, что я никогда не нахожу",
+            "За твою привычку гладить мою спину",
+            "За то, что ты рисуешь сердечки на запотевших окнах авто",
+            "Потому что ты — моя вечная романтика",
+            "За твои неожиданные комплименты",
+            "За то, что ты смешно морщишь нос, когда не согласна",
+            "За твою привычку держать меня за мизинец",
+            "За то, что ты — причина всех моих улыбок",
+            "Потому что ты делаешь каждый ужин романтическим свиданием",
+            "За твою способность заснуть за пять секунд",
+            "За то, что ты помнишь, какой я люблю хлеб",
+            "За твои волшебные руки, которые лечат головную боль",
+            "За то, что ты всегда ставишь нашу пару на первое место",
+            "Потому что ты — самая очаровательная в мире",
+            "За твою привычку целовать мне уголок рта",
+            "За то, что ты придумала наше секретное рукопожатие",
+            "За твои нежные слова, которые я перечитываю в переписке",
+            "За то, что ты — мой лучший компаньон для прогулок",
+            "Потому что ты превращаешь любую проблему в решаемую задачу",
+            "За твою привычку говорить 'мы' вместо 'я'",
+            "За то, что ты плачешь от радости на наших годовщинах",
+            "За твои маленькие ритуалы перед сном",
+            "За то, что ты — мой самый важный звонок каждый день",
+            "Потому что ты заставляешь время останавливаться",
+            "За твои глаза, которые говорят больше, чем слова",
+            "За то, что ты пробуешь всё, что я готовлю, и хвалишь",
+            "За твою привычку обвивать ноги вокруг моих",
+            "За то, что ты учишься вместе со мной чему-то новому",
+            "Потому что ты — мой источник вдохновения",
+            "За твои конопушки на носу",
+            "За то, что ты оставляешь свой шарф, чтобы мне было тепло",
+            "За твою привычку целовать каждый мой шрам",
+            "За то, что ты радуешься радуге как ребёнок",
+            "Потому что ты — моё самое ценное сокровище",
+            "За твой заливистый смех",
+            "За то, что ты делаешь фотоальбомы наших воспоминаний",
+            "За твою привычку кутаться в моё одеяло",
+            "За то, что ты — лучшее приключение моей жизни",
+            "Потому что ты знаешь, как заставить меня чувствовать себя нужным",
+            "За твои танцы с веником, когда ты убираешь",
+            "За то, что ты составляешь плейлисты для наших поездок",
+            "За твою привычку говорить 'скучаю' через пять минут разлуки",
+            "За то, что ты — единственная, с кем мне не скучно молчать",
+            "Потому что ты делаешь каждый снегопад романтичным",
+            "За твои объятия в очереди",
+            "За то, что ты носишь на шее кулон, который я подарил",
+            "За твою привычку кусать мороженое, а не лизать",
+            "За то, что ты — самый тёплый человек в моей жизни",
+            "Потому что ты делаешь меня храбрее",
+            "За твои утренние потягивания, как у котёнка",
+            "За то, что ты расчёсываешь мне волосы пальцами",
+            "За твою привычку ставить лайк на все мои фото",
+            "За то, что ты помнишь мой размер обуви",
+            "Потому что ты — моя любимая строчка каждой песни",
+            "За твои нежные пальцы на моём затылке",
+            "За то, что ты украшаешь наш дом фотографиями нас",
+            "За твою привычку говорить 'ты мой' с гордостью",
+            "За то, что ты — лучшее, что случалось со мной",
+            "Потому что ты заставляешь меня верить в будущее",
+            "За твою привычку трогать мои ресницы",
+            "За то, что ты делаешь горячий шоколад зимними вечерами",
+            "За твои голосовые сообщения, которые я переслушиваю",
+            "За то, что ты танцуешь медленный танец со мной дома",
+            "Потому что ты — моё тихое счастье",
+            "За твою привычку спрашивать 'ты покушал?'",
+            "За то, что ты стираешь слёзы кончиками пальцев",
+            "За твои губы, которые всегда мягкие",
+            "За то, что ты — мой любимый сюрприз каждый день",
+            "Потому что ты разделяешь мои мечты и делаешь их нашими",
+            "За твою привычку подкладывать мне добавку без спроса",
+            "За то, что ты умеешь рассмешить даже в самый тяжёлый день",
+            "За твои нежные руки на моих щеках",
+            "За то, что ты — самая заботливая в мире",
+            "Потому что ты делаешь мой день лучше одним своим присутствием",
+            "За твою привычку спать калачиком рядом со мной",
+            "За то, что ты всегда помнишь купить мой любимый йогурт",
+            "За твои восхищённые глаза, когда ты видишь закат",
+            "За то, что ты — мой самый верный союзник",
+            "Потому что ты превращаешь дождливый день в романтический",
+            "За твою привычку шептать мне секреты",
+            "За то, что ты наряжаешься для наших свиданий дома",
+            "За твои объятия после ссоры — самые крепкие",
+            "За то, что ты — мой любимый аромат",
+            "Потому что ты умеешь сделать любой вечер незабываемым",
+            "За твою привычку делать массаж моих рук",
+            "За то, что ты веришь в нас, когда я сомневаюсь",
+            "За твои прохладные ладони на моём горячем лбу",
+            "За то, что ты — лучшее лекарство от одиночества",
+            "Потому что ты каждый день показываешь, что значит любить",
+            "За твою привычку собирать жёлуди осенью",
+            "За то, что ты покупаешь мне книги, которые мне понравятся",
+            "За твои нежные слова после пробуждения",
+            "За то, что ты — моя главная мотивация",
+            "Потому что ты делаешь обычный обед семейным торжеством",
+            "За твою привычку рисовать смайлики в записках",
+            "За то, что ты знаешь все мои страхи и помогаешь с ними",
+            "За твои щёки, которые краснеют от комплиментов",
+            "За то, что ты — мой самый дорогой подарок судьбы",
+            "Потому что ты создаёшь в нашем доме атмосферу любви",
+            "За твою привычку считать минуты до встречи",
+            "За то, что ты делаешь коллажи из наших фотографий",
+            "За твои нежные взгляды исподлобья",
+            "За то, что ты — единственная, кому я говорю всё",
+            "Потому что ты — лучшая половина моего сердца",
+            "За твою привычку запоминать мои любимые цитаты",
+            "За то, что ты выбираешь красивое бельё, чтобы я восхищался",
+            "За твои нежные прикосновения к моему плечу",
+            "За то, что ты — моя самая красивая привычка",
+            "Потому что ты умеешь удивлять меня снова и снова",
+            "За твою привычку заправлять мне одеяло",
+            "За то, что ты помнишь имена всех моих друзей",
+            "За твои глаза, полные нежности",
+            "За то, что ты — самый близкий мне человек",
+            "Потому что ты делаешь зиму тёплой",
+            "За твою привычку играть с пуговицами на моей рубашке",
+            "За то, что ты бросаешь всё, когда мне нужна помощь",
+            "За твои поцелуи на кончике моего носа",
+            "За то, что ты — мой лучший критик и самый преданный фанат",
+            "Потому что ты всегда пахнешь уютом",
+            "За твою привычку засовывать руки мне в карманы",
+            "За то, что ты делаешь мне чай с лимоном, когда я кашляю",
+            "За твои бесконечные сторис, в которых всегда есть я",
+            "За то, что ты — мой любимый навигатор в поездках",
+            "Потому что ты умеешь видеть то, что другие не замечают",
+            "За твою привычку обнимать дерево, потому что оно 'грустное'",
+            "За то, что ты читаешь мне гороскопы каждое утро",
+            "За твои нежные руки, которые перебирают мои волосы",
+            "За то, что ты — единственная, ради кого я готов ехать через весь город",
+            "Потому что ты превращаешь ночь в самое уютное время",
+            "За твою привычку фотографировать нашу еду",
+            "За то, что ты отправляешь мне песни со словами 'это про нас'",
+            "За твои объятия, в которых помещается весь мой мир",
+            "За то, что ты — моя самая вкусная мечта",
+            "Потому что ты сохраняешь все мои подарки",
+            "За твою привычку спрашивать 'ты меня любишь?' сто раз в день",
+            "За то, что ты никогда не ложишься спать обиженной",
+            "За твои мечтательные глаза",
+            "За то, что ты — самый важный контакт в моём телефоне",
+            "Потому что ты умеешь слышать то, что я не говорю",
+            "За твою привычку целовать мои веки",
+            "За то, что ты делаешь мне бутерброд, разрезанный по диагонали",
+            "За твои руки, которые всегда находят мои в толпе",
+            "За то, что ты — лучшая часть моего утра",
+            "Потому что ты обнимаешь меня, когда мне снится кошмар",
+            "За твою привычку говорить 'осторожно, горячо' перед поцелуем",
+            "За то, что ты подпеваешь радио голосом ангела",
+            "За твои румяные щёки на морозе",
+            "За то, что ты — мой персональный стилист",
+            "Потому что ты всегда находишь то, что я потерял",
+            "За твою привычку трогать мой подбородок",
+            "За то, что ты помнишь, как мы впервые сказали друг другу 'люблю'",
+            "За твои руки, которые обнимают чашку с чаем",
+            "За то, что ты — моя сладкая бессонница",
+            "Потому что ты придумываешь смешные подписи к нашим фото",
+            "За твою привычку целовать мои кончики пальцев",
+            "За то, что ты делишься со мной своими страхами, доверяя мне",
+            "За твои босые ножки по утрам",
+            "За то, что ты — лучший слушатель на свете",
+            "Потому что ты заполняешь пустоту в моей душе",
+            "За твою привычку обнимать меня во время грозы",
+            "За то, что ты готовишь мне ужин при свечах",
+            "За твои маленькие причуды, которые я обожаю",
+            "За то, что ты — мой вечный двигатель счастья",
+            "Потому что ты научила меня быть нежным",
+            "За твою привычку поправлять мне воротничок",
+            "За то, что ты строишь замки из песка вместе со мной",
+            "За твои нежные поцелуи в плечо",
+            "За то, что ты — единственная, чьё мнение мне действительно важно",
+            "Потому что ты умеешь быть смешной без всяких усилий",
+            "За твою привычку завтракать в постели по выходным",
+            "За то, что ты танцуешь босиком на траве",
+            "За твои руки, которые я хочу держать всю жизнь",
+            "За то, что ты — мой личный генератор радости",
+            "Потому что ты помнишь наш первый танец",
+            "За твою привычку говорить мне 'спасибо' за мелочи",
+            "За то, что ты засыпаешь с моей рукой на своей талии",
+            "За твои глаза, которые искрятся, когда ты смеёшься",
+            "За то, что ты — самый нежный человек в мире",
+            "Потому что ты делаешь каждый наш снимок шедевром",
+            "За твою привычку кормить меня фруктами",
+            "За то, что ты вяжешь мне шарф, даже если получается криво",
+            "За твои нежные касания к моей шее",
+            "За то, что ты — мой самый верный болельщик",
+            "Потому что ты создаёшь вокруг себя атмосферу счастья",
+            "За твою привычку вставать на цыпочки, чтобы поцеловать меня",
+            "За то, что ты гуляешь со мной по ночному городу",
+            "За твои волосы, которые щекочут моё лицо, когда ты ложишься рядом",
+            "За то, что ты — моя любимая мелодия",
+            "Потому что ты всегда оставляешь мне лучший кусок",
+            "За твою привычку делать снежных ангелов",
+            "За то, что ты говоришь 'мы справимся' в трудные моменты",
+            "За твои маленькие танцы радости, когда что-то получается",
+            "За то, что ты — мой самый надёжный тыл",
+            "Потому что ты умеешь расставлять приоритеты и всегда ставишь нас первыми",
+            "За твою привычку обнимать каждое утро первым делом",
+            "За то, что ты читаешь мне забавные факты из интернета",
+            "За твои тёплые чулки, которые ты натягиваешь в холода",
+            "За то, что ты — лучший повод просыпаться каждый день",
+            "Потому что ты заботишься обо мне, как никто другой",
+            "За твою привычку сжимать мою руку три раза — 'я-люблю-тебя'",
+            "За то, что ты планируешь наши даты заранее и с энтузиазмом",
+            "За твои сияющие глаза при виде подарков",
+            "За то, что ты — мой островок спокойствия",
+            "Потому что ты превращаешь любой дом в наш дом",
+            "За твою привычку шептать добрые слова мне в ухо",
+            "За то, что ты собираешь гербарий из листьев наших прогулок",
+            "За твои солнечные объятия",
+            "За то, что ты — моя первая и последняя мысль каждого дня",
+            "Потому что ты умеешь превращать слёзы в смех",
+            "За твою привычку рассказывать мне о своих снах",
+            "За то, что ты покупаешь мне сладости перед важным экзаменом",
+            "За твои нежные пальчики на моём лице",
+            "За то, что ты — лучшая часть каждого моего воспоминания",
+            "Потому что ты делаешь каждый день стоящим того, чтобы его прожить",
+            "За твою привычку целовать мой висок",
+            "За то, что ты пишешь мне стихи на салфетках",
+            "За твои ласковые прикосновения",
+            "За то, что ты — мой любимый человек навсегда",
+            "Потому что ты знаешь, когда обнять, а когда дать пространство",
+            "За твою привычку класть ладонь мне на сердце",
+            "За то, что ты делаешь селфи с нами и ставишь на заставку",
+            "За твои тёплые ступни, которыми ты греешься об меня",
+            "За то, что ты — мой самый дорогой человек",
+            "Потому что ты каждый раз встречаешь меня с такой радостью",
+            "За твою привычку кормить голубей в парке",
+            "За то, что ты сохраняешь билеты с наших свиданий",
+            "За твои романтичные глаза",
+            "За то, что ты — лучший партнёр для танцев",
+            "Потому что ты умеешь наслаждаться моментом",
+            "За твою привычку обнимать мою руку двумя руками",
+            "За то, что ты рисуешь сердца на пенке кофе",
+            "За твои тихие 'я скучаю'",
+            "За то, что ты — мой генератор тепла",
+            "Потому что ты всегда берёшь с собой зонтик для нас двоих",
+            "За твою привычку целовать мне запястье",
+            "За то, что ты помнишь мои детские истории",
+            "За твои добрые глаза, в которых я тону",
+            "За то, что ты — моя звезда путеводная",
+            "Потому что ты создаёшь волшебство из обычных вечеров",
+            "За твою привычку заворачиваться в полотенце как в кокон",
+            "За то, что ты говоришь маме, какой я замечательный",
+            "За твои тёплые поцелуи в холодный нос",
+            "За то, что ты — лучшая компания для дождливого вечера",
+            "Потому что ты умеешь петь так, что мурашки по коже",
+            "За твою привычку прижимать мою ладонь к своей щеке",
+            "За то, что ты планируешь сюрпризы месяцами",
+            "За твои объятия, от которых плавится мир",
+            "За то, что ты — мой источник бесконечной радости",
+            "Потому что ты всегда оставляешь записку, если уходишь раньше",
+            "За твою привычку петь мне на ухо",
+            "За то, что ты делаешь самые вкусные бутерброды на свете",
+            "За твои маленькие хитрости, чтобы привлечь моё внимание",
+            "За то, что ты — мой самый красивый закат",
+            "Потому что ты помнишь, как я пью кофе — с двумя ложками сахара",
+            "За твою привычку обнимать плюшевого мишку, которого я подарил",
+            "За то, что ты ставишь нашу любовь выше всего",
+            "За твои лучистые улыбки",
+            "За то, что ты — лучший человек для совместного молчания",
+            "Потому что ты делаешь каждую весну ещё прекраснее",
+            "За твою привычку целовать мои закрытые глаза",
+            "За то, что ты катаешься со мной на велосипедах",
+            "За твои нежные движения, когда ты расчёсываешь волосы",
+            "За то, что ты — мой вечный источник вдохновения",
+            "Потому что ты заставляешь каждую секунду вместе быть ценной",
+            "За твою привычку шептать 'спокойной ночи, мой хороший'",
+            "За то, что ты всегда чувствуешь, когда мне плохо",
+            "За твои маленькие победные танцы",
+            "За то, что ты — мой лучший советчик",
+            "Потому что ты научила меня радоваться мелочам",
+            "За твою привычку гладить мои брови",
+            "За то, что ты создаёшь атмосферу праздника даже без повода",
+            "За твои тёплые слова, которые я ношу в сердце",
+            "За то, что ты — единственная, с кем я хочу встретить старость",
+            "Потому что ты делаешь мою жизнь сказкой",
+            "За твою привычку брать мою одежду и носить её дома",
+            "За то, что ты веришь в чудеса и заставляешь верить меня",
+            "За твои утренние поцелуи",
+            "За то, что ты — мой персональный ангел-хранитель",
+            "Потому что ты всегда выглядишь красиво — в любом настроении",
+            "За твою привычку задувать одуванчики и загадывать желания",
+            "За то, что ты готовишь мне глинтвейн холодными вечерами",
+            "За твои нежные слова утешения",
+            "За то, что ты — мой самый близкий и родной человек",
+            "Потому что ты делаешь каждый час с тобой незабываемым",
+            "За твою привычку кидаться снежками",
+            "За то, что ты собираешь букеты из полевых цветов",
+            "За твои горячие руки на моих холодных щеках",
+            "За то, что ты — моя любовь с первого вздоха",
+            "Потому что ты умеешь быть одновременно нежной и страстной",
+            "За твою привычку оставлять на подушке след от помады",
+            "За то, что ты делаешь каждый наш поцелуй особенным",
+            "За твои тёплые объятия после разлуки",
+            "За то, что ты — мой главный приоритет",
+            "Потому что ты создаёшь самые лучшие воспоминания",
+            "За твою привычку сидеть у меня на коленях",
+            "За то, что ты покупаешь одинаковые кружки для нас",
+            "За твои добрые поступки, о которых ты не рассказываешь",
+            "За то, что ты — самая важная глава моей жизни",
+            "Потому что ты каждый день даришь мне свою любовь",
+            "За твою привычку носить цветок за ухом",
+            "За то, что ты пишешь мне длинные послания на праздники",
+            "За твои глаза, в которых я вижу наше будущее",
+            "За то, что ты — моя тихая радость",
+            "Потому что ты всегда помнишь, что я люблю пиццу с ананасами",
+            "За твою привычку целовать мой подбородок",
+            "За то, что ты собираешь монетки на наши мечты",
+            "За твои ласковые прозвища для меня",
+            "За то, что ты — лучшее начало и конец каждого дня",
+            "Потому что ты делаешь всё с любовью",
+            "За твою привычку прижиматься лбом к моему",
+            "За то, что ты знаешь все мои привычки и любишь каждую",
+            "За твои поцелуи на ходу",
+            "За то, что ты — мой главный источник гордости",
+            "Потому что ты умеешь быть благодарной",
+            "За твою привычку перебирать мои пальцы",
+            "За то, что ты делаешь мне сюрпризы на работе",
+            "За твои нежные касания к моей спине",
+            "За то, что ты — мой личный источник счастья",
+            "Потому что ты каждый день напоминаешь мне, почему я выбрал тебя",
+            "За твою привычку приносить мне одеяло на диван",
+            "За то, что ты катаешь снеговиков со мной каждую зиму",
+            "За твои тёплые руки, которые обхватывают чашку",
+            "За то, что ты — моя самая любимая звезда",
+            "Потому что ты никогда не перестаёшь меня удивлять",
+            "За твою привычку прятаться за мной, когда тебе страшно",
+            "За то, что ты учишь меня быть лучше каждый день",
+            "За твои сладкие губы",
+            "За то, что ты — мой самый дорогой человек",
+            "Потому что ты делаешь каждый момент достойным фотографии",
+            "За твою привычку гладить мою руку большим пальцем",
+            "За то, что ты покупаешь парные вещи для нас",
+            "За твои искренние 'я тебя люблю'",
+            "За то, что ты — мой любимый голос в телефоне",
+            "Потому что ты заставляешь меня чувствовать себя особенным",
+            "За твою привычку обнимать меня за талию",
+            "За то, что ты оставляешь мне последний пончик",
+            "За твои нежные шёпоты",
+            "За то, что ты — лучший человек для разговоров по душам",
+            "Потому что ты каждый раз смотришь на меня как впервые",
+            "За твою привычку целовать мою щёку внезапно",
+            "За то, что ты помнишь наши маленькие внутренние шутки",
+            "За твои руки, обнимающие меня сзади",
+            "За то, что ты — моя самая тёплая зима",
+            "Потому что ты умеешь находить радость в каждом мгновении",
+            "За твою привычку говорить 'я горжусь тобой'",
+            "За то, что ты делаешь завтрак с сердечками из варенья",
+            "За твои внимательные глаза, которые замечают всё",
+            "За то, что ты — мой самый верный друга",
+            "Потому что ты превращаешь обычные моменты в особенные",
+            "За твою привычку обнимать подушку, когда думаешь обо мне",
+            "За то, что ты строишь планы на наши путешествия",
+            "За твои тихие вздохи счастья",
+            "За то, что ты — моя бесконечная любовь",
+            "Потому что ты делаешь наш дом самым лучшим местом на земле",
+            "За твою привычку целовать мои руки перед едой",
+            "За то, что ты придумываешь имена для наших будущих питомцев",
+            "За твои сонные улыбки",
+            "За то, что ты — мой лучший мотиватор",
+            "Потому что ты создаёшь уют в каждом уголке нашего дома",
+            "За твою привычку обнимать мою руку, как ребёнок",
+            "За то, что ты делаешь для меня особенные десерты",
+            "За твои поцелуи, которые заставляют забыть обо всём",
+            "За то, что ты — мой персональный магнит счастья",
+            "Потому что ты всегда будешь моей любимой",
+            "За твою привычку водить пальцем по моей руке",
+            "За то, что ты устраиваешь вечера кино с попкорном",
+            "За твои ласковые объятия посреди ночи",
+            "За то, что ты — моя самая прекрасная реальность",
+            "Потому что ты делаешь мою жизнь полной любви",
+            "За твою привычку ставить цветы в каждую комнату",
+            "За то, что ты заботишься о каждом члене нашей семьи",
+            "За твои нежные поцелуи в ключицу",
+            "За то, что ты — мой источник бесконечного тепла",
+            "Потому что ты каждый день доказываешь, что любовь существует",
+            "За твою привычку рисовать на запотевших зеркалах",
+            "За то, что ты помнишь каждое наше первое свидание в деталях",
+            "За твои тёплые ладони, которые успокаивают",
+            "За то, что ты — моя самая большая удача",
+            "Потому что ты превращаешь мои слабости в силу",
+            "За твою привычку говорить 'возвращайся скорее'",
+            "За то, что ты делаешь нашу постель самым уютным местом",
+            "За твои искренние слёзы радости",
+            "За то, что ты — единственная, кого я хочу видеть каждый день",
+            "Потому что ты заставляешь меня верить в себя",
+            "За твою привычку танцевать со шваброй",
+            "За то, что ты пишешь мне 'ты лучший' без повода",
+            "За твои глаза, которые блестят от счастья",
+            "За то, что ты — мой компас в жизни",
+            "Потому что ты делаешь каждый вздох рядом с тобой ценным",
+            "За твою привычку целовать мои пальцы, когда они замёрзли",
+            "За то, что ты готовишь мне суп, когда я болею",
+            "За твои тёплые слова поддержки перед важным событием",
+            "За то, что ты — мой самый любимый человечек",
+            "Потому что ты умеешь делать из ничего праздник",
+            "За твою привычку прижимать мою руку к своему сердцу",
+            "За то, что ты верила в нас, когда все сомневались",
+            "За твои нежные поглаживания по голове",
+            "За то, что ты — лучшая часть моей истории",
+            "Потому что ты создаёшь гармонию в нашей паре",
+            "За твою привычку говорить 'я так тебя ждала'",
+            "За то, что ты делаешь самый вкусный чай с мятой",
+            "За твои объятия, которые заменяют тысячу слов",
+            "За то, что ты — моя вечная валентинка",
+            "Потому что ты всегда знаешь, чего мне не хватает",
+            "За твою привычку украшать нашу комнату гирляндами",
+            "За то, что ты храбро признаёшься мне в любви",
+            "За твои тёплые поцелуи в затылок",
+            "За то, что ты — мой любимый сюрприз от вселенной",
+            "Потому что ты научила меня ценить каждый день вместе",
+            "За твою привычку обнимать меня, стоя на одной ноге",
+            "За то, что ты составляешь списки благодарностей друг другу",
+            "За твои светлые мечты о нашем будущем",
+            "За то, что ты — самая нежная и заботливая",
+            "Потому что ты умеешь любить без условий",
+            "За твою привычку целовать мою ладонь и прикладывать к своей щеке",
+            "За то, что ты делаешь каждый совместный обед праздничным",
+            "За твои ласковые руки, которые всегда рядом",
+            "За то, что ты — мой главный смысл жизни",
+            "Потому что ты делаешь каждый листопад романтичным",
+            "За твою привычку присылать мне утренние фото",
+            "За то, что ты всегда рядом — в радости и в горе",
+            "За твои мечтательные вздохи",
+            "За то, что ты — моя личная радуга после дождя",
+            "Потому что ты заставляешь каждую минуту разлуки казаться вечностью",
+            "За твою привычку обнимать меня, прижавшись всем телом",
+            "За то, что ты рисуешь наше будущее самыми яркими красками",
+            "За твои руки, которые я узнаю из тысячи",
+            "За то, что ты — мой личный волшебник",
+            "Потому что ты каждый раз целуешь меня как в последний",
+            "За твою привычку шептать 'ты мой самый любимый'",
+            "За то, что ты приносишь мне кофе в постель в выходные",
+            "За твои глаза, в которых отражаются звёзды",
+            "За то, что ты — лучший подарок, который мне делала жизнь",
+            "Потому что ты умеешь превращать ссору в примирение",
+            "За твою привычку оставлять на моей одежде свой запах",
+            "За то, что ты катаешься на моей спине, когда устала",
+            "За твои руки, которые обвивают мою шею",
+            "За то, что ты — моя самая трогательная история",
+            "Потому что ты делаешь меня целым",
+            "За твою привычку целовать моё отражение в зеркале",
+            "За то, что ты придумываешь наши совместные ритуалы",
+            "За твои нежные 'доброе утро, солнце'",
+            "За то, что ты — единственная, ради кого я встаю пораньше",
+            "Потому что ты превращаешь рутину в удовольствие",
+            "За твою привычку прижимать к себе мою руку во сне",
+            "За то, что ты делаешь каждый наш снимок памятным",
+            "За твои влюблённые глаза",
+            "За то, что ты — мой любимый человек из семи миллиардов",
+            "Потому что ты заполняешь мою жизнь светом",
+            "За твою привычку рассказывать мне о своём дне в мельчайших деталях",
+            "За то, что ты водишь меня за руку по магазинам",
+            "За твои поцелуи, от которых кружится голова",
+            "За то, что ты — мой вечный источник нежности",
+            "Потому что ты умеешь плакать от радости",
+            "За твою привычку целовать каждый мой палец отдельно",
+            "За то, что ты делаешь наш дом лучше любого дворца",
+            "За твои улыбки, которые я запоминаю навсегда",
+            "За то, что ты — мой самый любимый аргумент за то, что жизнь прекрасна",
+            "Потому что ты каждый вечер засыпаешь, обнимая меня",
+            "За твою привычку говорить 'я без тебя не могу'",
+            "За то, что ты помнишь вкус моего первого для тебя ужина",
+            "За твои тёплые объятия в самолёте",
+            "За то, что ты — лучшее доказательство того, что мечты сбываются",
+            "Потому что ты делаешь каждый рассвет со мной незабываемым",
+            "За твою привычку обнимать меня на эскалаторе",
+            "За то, что ты создаёшь для нас маленький мир, полный любви",
+            "За твои горячие поцелуи",
+            "За то, что ты — моя единственная и неповторимая",
+            "Потому что ты научила меня верить в вечную любовь",
+            "За твою привычку прижиматься носом к моей шее",
+            "За то, что ты катаешь меня на тележке в супермаркете",
+            "За твои нежные прикосновения утром",
+            "За то, что ты — мой самый красивый рассвет",
+            "Потому что ты делаешь каждый наш день неповторимым",
+            "За твою привычку перебирать украшения перед зеркалом",
+            "За то, что ты всегда говоришь мне, как сильно любишь",
+            "За твои руки, которые согревают мою душу",
+            "За то, что ты — моя самая главная победа в жизни",
+            "Потому что ты создаёшь вокруг себя ауру любви",
+            "За твою привычку чмокать меня в макушку",
+            "За то, что ты делаешь наши вечера тёплыми и уютными",
+            "За твои глаза, которые я мог бы рассматривать вечно",
+            "За то, что ты — мой самый дорогой трофей",
+            "Потому что ты умеешь заботиться так, что сердце тает",
+            "За твою привычку гулять со мной под звёздами",
+            "За то, что ты складываешь мою одежду аккуратно",
+            "За твои поцелуи-бабочки",
+            "За то, что ты — мой главный источник любви",
+            "Потому что ты делаешь каждое прощание обещанием встречи",
+            "За твою привычку обнимать меня перед выходом из дома",
+            "За то, что ты сочиняешь нашу историю каждый день",
+            "За твои маленькие капризы, которые делают жизнь ярче",
+            "За то, что ты — мой любимый вкус",
+            "Потому что ты заставляешь каждый совместный ужин быть праздником",
+            "За твою привычку говорить 'ты пахнешь вкусно'",
+            "За то, что ты отмечаешь каждый наш маленький юбилей",
+            "За твои романтические жесты",
+            "За то, что ты — самое ценное в моей жизни",
+            "Потому что ты научила меня быть терпеливым и любящим",
+            "За твою привычку спать в моей рубашке",
+            "За то, что ты не считаешь дни — ты делаешь каждый день ценным",
+            "За твои руки, обнимающие меня от радости",
+            "За то, что ты — моя любимая причина для улыбки",
+            "Потому что ты делаешь мою жизнь бесконечно красивой",
+            "За твою привычку присылать мне фото котиков",
+            "За то, что ты оставляешь отпечаток помады на моей чашке",
+            "За твои ласковые 'я скучаю по тебе'",
+            "За то, что ты — моя самая нежная половина",
+            "Потому что ты создаёшь счастье каждый день",
+            "За твою привычку класть свою ногу на мою под столом",
+            "За то, что ты знаешь, как приготовить моё любимое блюдо",
+            "За твои горячие взгляды",
+            "За то, что ты — мой бесконечный источник вдохновения",
+            "Потому что ты заполняешь каждую пустоту в моём сердце",
+            "За твою привычку рисовать на моей коже пальцем",
+            "За то, что ты планируешь наше будущее с энтузиазмом",
+            "За твои объятия, в которых я хочу остаться навсегда",
+            "За то, что ты — мой самый лучший выбор",
+            "Потому что ты каждый день делаешь меня счастливее",
+            "За твою привычку оборачивать руки вокруг моей руки",
+            "За то, что ты делаешь каждый совместный завтрак уютным",
+            "За твои нежные слова, которые я помню наизусть",
+            "За то, что ты — моя бесконечная весна",
+            "Потому что ты превращаешь расставание в ожидание встречи",
+            "За твою привычку целовать мою шею, обнимая сзади",
+            "За то, что ты составляешь списки фильмов для наших вечеров",
+            "За твои маленькие записки 'люблю тебя' в моих карманах",
+            "За то, что ты — мой любимый рецепт счастья",
+            "Потому что ты заставляешь меня гордиться тем, что я — твой",
+            "За твою привычку обнимать мою подушку и вдыхать мой запах",
+            "За то, что ты делаешь каждый поход в магазин весёлым",
+            "За твои восхищённые охи при виде красоты",
+            "За то, что ты — моя самая родная душа",
+            "Потому что ты делаешь каждый наш совместный выходной идеальным",
+            "За твою привычку целовать мне ладонь перед сном",
+            "За то, что ты всегда помнишь, что я не ем лук",
+            "За твои нежные пальцы, перебирающие мои волосы",
+            "За то, что ты — лучшая сказка на ночь",
+            "Потому что ты превращаешь каждую прогулку в приключение",
+            "За твою привычку говорить 'ты — моё всё'",
+            "За то, что ты делаешь нашу жизнь полной сюрпризов",
+            "За твои глаза после поцелуя — затуманенные счастьем",
+            "За то, что ты — моя вечная любовь",
+            "Потому что ты научила меня быть благодарным каждый день",
+            "За твою привычку обнимать меня двумя руками крепко-крепко",
+            "За то, что ты создаёшь наши собственные традиции",
+            "За твои ласковые прозвища, от которых я таю",
+            "За то, что ты — мой самый лучший день, повторяющийся каждый день",
+            "Потому что ты делаешь мои сны о будущем реальными",
+            "За твою привычку присылать мне цитаты о любви",
+            "За то, что ты хранишь все наши памятные вещицы",
+            "За твои руки, которые лечат мою усталость",
+            "За то, что ты — мой персональный источник радости и тепла",
+            "Потому что ты каждый раз доказываешь, что я сделал правильный выбор",
+            "За твою привычку засыпать, переплетя наши ноги",
+            "За то, что ты дарить мне свою любовь безвозмездно",
+            "За твои нежные взгляды через всю комнату",
+            "За то, что ты — моя самая красивая песня",
+            "Потому что ты умеешь сделать любой момент волшебным",
+            "За твою привычку подкладывать мне вкусности в сумку",
+            "За то, что ты смеёшься, когда я корчу рожицы",
+            "За твои объятия, от которых хочется жить",
+            "За то, что ты — мой самый любимый запах",
+            "Потому что ты каждый раз встречаешь меня как самого важного гостя",
+            "За твою привычку обнимать меня и не отпускать",
+            "За то, что ты делаешь наши вечера неповторимыми",
+            "За твои маленькие нежности, которые делают день",
+            "За то, что ты — моя бескочная благодарность вселенной",
+            "Потому что ты — лучший ответ на все мои молитвы",
+            "За твою привычку играть с моим кольцом на пальце",
+            "За то, что ты придумываешь нам совместные проекты",
+            "За твои поцелуи, полные нежности",
+            "За то, что ты — моя главная радость в жизни",
+            "Потому что ты превращаешь каждую ночь в сказку",
+            "За твою привычку греть мои руки своим дыханием",
+            "За то, что ты рассказываешь друзьям о нас с гордостью",
+            "За твои заботливые взгляды",
+            "За то, что ты — самое прекрасное создание на этой планете",
+            "Потому что ты делаешь каждый мой вздох осмысленным",
+            "За твою привычку трогать мою щетину",
+            "За то, что ты готовишь мне суши дома",
+            "За твои ласковые поглаживания",
+            "За то, что ты — моя бесценная половинка",
+            "Потому что ты заставляешь каждый закат быть нашим",
+            "За твою привычку обнимать меня, когда смотрим фильм",
+            "За то, что ты знаешь название каждого цветка",
+            "За твои глаза, полные обожания",
+            "За то, что ты — мой любимый вид из окна жизни",
+            "Потому что ты научила меня, что любовь — это глагол",
+            "За твою привычку посылать мне воздушные поцелуи",
+            "За то, что ты делаешь каждое 'люблю' особенным",
+            "За твои объятия в лифте",
+            "За то, что ты — самое дорогое, что у меня есть",
+            "Потому что ты каждый день выбираешь любить меня заново",
+            "За твою привычку закрывать мне глаза перед сюрпризом",
+            "За то, что ты готовишь блины по субботам",
+            "За твои нежные поцелуи в висок",
+            "За то, что ты — моя вечная муза",
+            "Потому что ты превращаешь каждый совместный момент в воспоминание",
+            "За твою привычку ложиться ко мне на грудь и слушать сердце",
+            "За то, что ты делишься со мной своим теплом",
+            "За твои маленькие радости, которые становятся моими",
+            "За то, что ты — лучшая версия того, о чём я мечтал",
+            "Потому что ты заполняешь мой мир красками",
+            "За твою привычку обнимать меня за плечи",
+            "За то, что ты слушаешь мои рассказы с искренним интересом",
+            "За твои тёплые ноги, которые ищут мои под одеялом",
+            "За то, что ты — мой постоянный источник счастья и любви",
+            "Потому что ты умеешь быть рядом, не говоря ни слова",
+            "За твою привычку целовать мои закрытые глаза утром",
+            "За то, что ты — мой лучший партнёр по жизни",
+            "За твои глаза, которые горят, когда ты рассказываешь о мечтах",
+            "За то, что ты — причина, по которой я верю в чудеса",
+            "Потому что ты — самая лучшая, и я люблю тебя бесконечно",
+            "За то, что ты делаешь каждый наш день лучшим днём моей жизни",
+            "За твою привычку обнимать меня так, будто завтра не наступит",
+            "За то, что ты — моё всё, и я благодарен за каждую секунду с тобой",
+            "Потому что ты — единственная, кого моё сердце зовёт домой",
+            "За то, что ты существуешь, и мне невероятно повезло тебя встретить"
+        ];
+
+        // 1. ТАЙМЕР: 14 ноября 2025 года
+        const START_DATE = new Date('2025-11-14T00:00:00');
+
+        function pluralize(number, titles) {
+            const cases = [2, 0, 1, 1, 1, 2];
+            return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = Math.max(0, now - START_DATE);
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            document.getElementById('days-label').textContent = pluralize(days, ['день', 'дня', 'дней']);
+            document.getElementById('hours-label').textContent = pluralize(hours, ['час', 'часа', 'часов']);
+            document.getElementById('minutes-label').textContent = pluralize(minutes, ['минута', 'минуты', 'минут']);
+            document.getElementById('seconds-label').textContent = pluralize(seconds, ['секунда', 'секунды', 'секунд']);
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // 2. СЕРДЕЧКИ ПРИ КЛИКЕ
+        const heartSymbols = ['♥', '♡'];
+        document.addEventListener('pointerdown', function (e) {
+            if (e.target.closest('#no-btn') || e.target.closest('button') || e.target.closest('input')) return;
+            const heart = document.createElement('span');
+            heart.className = 'click-heart';
+            heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1200);
+        });
+
+        // 3. МУЗЫКАЛЬНЫЙ ПЛЕЕР (3 ТРЕКА НА КАЖДУЮ СТОРОНУ)
+        const playlists = {
+            sonya: [
+                { artist: 'UBEL', title: 'Я буду ждать', file: 'ubel.mp3' },
+                { artist: 'Электрофорез', title: 'Русская принцесса', file: 'electroforez.mp3' },
+                { artist: 'гокки', title: 'Любовь', file: 'gokki.mp3' }
+            ],
+            vanya: [
+                { artist: 'Баста, Моя Мишель', title: 'Если я буду танцевать', file: 'basta.mp3' },
+                { artist: 'Мартин', title: 'Ты случилась', file: 'martin.mp3' },
+                { artist: 'Моревнутри', title: 'Ёлка', file: 'elka.mp3' }
+            ]
+        };
+
+        const selectedTrackIndex = { sonya: 0, vanya: 0 };
+        let currentSide = null;
+        const playIcon = '<path d="M8 5v14l11-7z"/>';
+        const pauseIcon = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+
+        function formatTime(sec) {
+            if (isNaN(sec) || !isFinite(sec)) return '0:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${String(s).padStart(2, '0')}`;
+        }
+
+        function renderTracklist(side) {
+            const container = document.getElementById(`tracklist-${side}`);
+            const activeIdx = selectedTrackIndex[side];
+            container.innerHTML = playlists[side].map((track, idx) => {
+                const isActive = idx === activeIdx;
+                const activeClasses = side === 'sonya'
+                    ? 'bg-roseDust/20 border-roseDust text-charcoal font-semibold'
+                    : 'bg-charcoal/10 border-charcoal/40 text-charcoal font-semibold';
+                const inactiveClasses = 'bg-cream/90 border-transparent hover:border-charcoal/20 text-charcoal/75';
+                return `
+          <button type="button" onclick="selectTrack('${side}', ${idx})"
+            class="w-full text-left px-3 py-1.5 rounded-xl border text-xs flex items-center justify-between transition-all cursor-pointer ${isActive ? activeClasses : inactiveClasses}">
+            <span class="truncate pr-2">${idx + 1}. ${track.artist} — ${track.title}</span>
+            <span class="text-[10px] opacity-70 shrink-0">${isActive ? '♪' : 'Выбрать'}</span>
+          </button>
+        `;
+            }).join('');
+        }
+
+        function loadTrack(side, idx, autoPlay = false) {
+            selectedTrackIndex[side] = idx;
+            const track = playlists[side][idx];
+            const audio = document.getElementById(`audio-${side}`);
+            const statusEl = document.getElementById(`status-${side}`);
+
+            document.getElementById(`artist-${side}`).textContent = track.artist;
+            document.getElementById(`title-${side}`).textContent = track.title;
+            document.getElementById(`progress-${side}`).value = 0;
+            document.getElementById(`time-cur-${side}`).textContent = '0:00';
+            document.getElementById(`time-dur-${side}`).textContent = '0:00';
+            statusEl.textContent = '';
+
+            audio.src = track.file;
+            renderTracklist(side);
+
+            if (autoPlay) {
+                playSide(side);
+            }
+        }
+
+        function selectTrack(side, idx) {
+            if (selectedTrackIndex[side] === idx) {
+                toggleAudio(side);
+                return;
+            }
+            stopOtherSide(side);
+            loadTrack(side, idx, true);
+        }
+
+        function stopOtherSide(activeSide) {
+            const otherSide = activeSide === 'sonya' ? 'vanya' : 'sonya';
+            const otherAudio = document.getElementById(`audio-${otherSide}`);
+            if (!otherAudio.paused) {
+                otherAudio.pause();
+            }
+            const otherIcon = document.getElementById(`icon-${otherSide}`);
+            otherIcon.innerHTML = playIcon;
+            otherIcon.classList.add('ml-0.5');
+            document.getElementById(`vinyl-${otherSide}`).classList.remove('vinyl-spin');
+        }
+
+        function playSide(side) {
+            stopOtherSide(side);
+            const audio = document.getElementById(`audio-${side}`);
+            const icon = document.getElementById(`icon-${side}`);
+            const vinyl = document.getElementById(`vinyl-${side}`);
+            const statusEl = document.getElementById(`status-${side}`);
+
+            audio.play().then(() => {
+                statusEl.textContent = '';
+                icon.innerHTML = pauseIcon;
+                icon.classList.remove('ml-0.5');
+                vinyl.classList.add('vinyl-spin');
+                currentSide = side;
+            }).catch(() => {
+                if (audio.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+                    statusEl.textContent = `Файл «${playlists[side][selectedTrackIndex[side]].file}» не найден`;
+                } else {
+                    statusEl.textContent = 'Открой в обычном браузере (предпросмотр не играет MP3)';
+                }
+                icon.innerHTML = playIcon;
+                icon.classList.add('ml-0.5');
+                vinyl.classList.remove('vinyl-spin');
+            });
+        }
+
+        function toggleAudio(side) {
+            const audio = document.getElementById(`audio-${side}`);
+            const icon = document.getElementById(`icon-${side}`);
+            const vinyl = document.getElementById(`vinyl-${side}`);
+
+            if (audio.paused) {
+                playSide(side);
+            } else {
+                audio.pause();
+                icon.innerHTML = playIcon;
+                icon.classList.add('ml-0.5');
+                vinyl.classList.remove('vinyl-spin');
+                currentSide = null;
+            }
+        }
+
+        function seekAudio(side, percent) {
+            const audio = document.getElementById(`audio-${side}`);
+            if (audio.duration) {
+                audio.currentTime = (percent / 100) * audio.duration;
+            }
+        }
+
+        ['sonya', 'vanya'].forEach(side => {
+            const audio = document.getElementById(`audio-${side}`);
+            const progress = document.getElementById(`progress-${side}`);
+            const curEl = document.getElementById(`time-cur-${side}`);
+            const durEl = document.getElementById(`time-dur-${side}`);
+
+            audio.addEventListener('loadedmetadata', () => {
+                durEl.textContent = formatTime(audio.duration);
+            });
+
+            audio.addEventListener('timeupdate', () => {
+                curEl.textContent = formatTime(audio.currentTime);
+                if (audio.duration) {
+                    progress.value = (audio.currentTime / audio.duration) * 100;
+                }
+            });
+
+            audio.addEventListener('ended', () => {
+                const icon = document.getElementById(`icon-${side}`);
+                icon.innerHTML = playIcon;
+                icon.classList.add('ml-0.5');
+                document.getElementById(`vinyl-${side}`).classList.remove('vinyl-spin');
+                progress.value = 0;
+                curEl.textContent = '0:00';
+            });
+
+            loadTrack(side, 0, false);
+        });
+
+        function flipMusicCard(e) {
+            e.stopPropagation();
+            document.getElementById('music-card').classList.toggle('flipped');
+        }
+
+        // 4. ПРИЧИНЫ
+        let currentReasonIndex = -1;
+        function showNextReason() {
+            const textEl = document.getElementById('reason-text');
+            const numEl = document.getElementById('reason-number');
+            textEl.classList.add('reason-hidden');
+            setTimeout(() => {
+                let nextIndex;
+                do {
+                    nextIndex = Math.floor(Math.random() * loveReasons.length);
+                } while (nextIndex === currentReasonIndex && loveReasons.length > 1);
+
+                currentReasonIndex = nextIndex;
+                const displayNum = Math.floor(Math.random() * 999) + 2;
+                numEl.textContent = `Причина #${displayNum}`;
+                textEl.textContent = loveReasons[currentReasonIndex];
+                textEl.classList.remove('reason-hidden');
+            }, 260);
+        }
+
+        // 5. УБЕГАЮЩАЯ КНОПКА
+        const noBtn = document.getElementById('no-btn');
+        const noTexts = ["Нет", "Точно нет?", "Ой, промах!", "Не догонишь", "Жми «Да!»"];
+        let dodgeCount = 0;
+        function dodgeNoButton(e) {
+            if (e) e.preventDefault();
+            dodgeCount++;
+            noBtn.textContent = noTexts[dodgeCount % noTexts.length];
+            const maxOffsetX = window.innerWidth < 500 ? 85 : 140;
+            const randomX = (Math.random() * 2 - 1) * maxOffsetX;
+            const randomY = (Math.random() * 2 - 1) * 45;
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+        noBtn.addEventListener('mouseenter', dodgeNoButton);
+        noBtn.addEventListener('touchstart', dodgeNoButton, { passive: false });
+
+        function acceptSubscription() {
+            document.getElementById('buttons-area').classList.add('hidden');
+            document.getElementById('finale-subtitle').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+            const symbols = ['♥', '✦', '♡'];
+            for (let i = 0; i < 45; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('span');
+                    particle.className = 'celebration-particle';
+                    particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                    particle.style.left = Math.random() * 100 + 'vw';
+                    particle.style.fontSize = (Math.random() * 16 + 14) + 'px';
+                    particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 4000);
+                }, i * 55);
+            }
+        }
+    </script>
 </body>
+
 </html>
